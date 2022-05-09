@@ -1,0 +1,10 @@
+.DS_Store
+.test_results/
+.vscode-test/
+.vscode/.browse.VC.db*
+*.log
+build/
+coverage/
+logs/
+node_modules/
+out/
