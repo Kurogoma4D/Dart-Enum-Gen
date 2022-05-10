@@ -11,13 +11,9 @@ export default class DartEnum {
     this.range = range;
   }
 
-  static fromString(input: TextDocument): DartEnum | null {
+  static fromString(input: String): DartEnum | null {
     const enumPattern = /(?<=(enum\s))([A-Z][a-zA-Z0-9{,\s\S]*?})/;
-    const text = input.getText();
-    const match = text.match(enumPattern);
-
-    // TODO: カーソルに一番近いenumを取り出す
-    // TODO: enumの下にextensionを出せるようにする
+    const match = input.match(enumPattern);
 
     if (!match) {
       return null;
@@ -41,7 +37,10 @@ export default class DartEnum {
   }
 
   private static extractValues(input: string): string[] {
-    return input.split(',').map((e) => e.trim());
+    return input
+      .split(',')
+      .map((e) => e.trim())
+      .filter((e) => e !== '');
   }
 
   toDartCode(): string {

@@ -8,14 +8,11 @@ export class EnumPatternMatchGenerator implements vscode.CodeActionProvider {
     context: vscode.CodeActionContext,
     token: vscode.CancellationToken
   ): vscode.ProviderResult<(vscode.CodeAction | vscode.Command)[]> {
-    console.log('prepare...');
     const action = this.generatePatternMatch(document, range);
 
     if (!action) {
       return [];
     }
-
-    console.log('generated action.');
 
     return [action];
   }
@@ -35,10 +32,28 @@ export class EnumPatternMatchGenerator implements vscode.CodeActionProvider {
       vscode.CodeActionKind.Refactor
     );
 
+    const wordRange = document.getWordRangeAtPosition(range.start);
+
+    if (!wordRange) {
+      return null;
+    }
+
+    const cursorLine = document.lineAt(range.start.line);
+
+    if (!cursorLine || !cursorLine.text.includes('enum')) {
+      return null;
+    }
+
+    var rawInput = cursorLine.text;
+    var line = range.start.line;
+    while (!rawInput.includes('}')) {
+      line++;
+      rawInput += document.lineAt(line).text;
+    }
+
     fix.edit = new vscode.WorkspaceEdit();
 
-    // TODO: Dartコードをとってきてenumの下にextension生やす
-    const dartEnum = DartEnum.fromString(document);
+    const dartEnum = DartEnum.fromString(rawInput);
 
     if (!dartEnum) {
       return null;
