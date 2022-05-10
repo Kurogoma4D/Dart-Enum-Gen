@@ -49,21 +49,27 @@ export default class DartEnum {
 extension ${this.name}PatternMatch on ${this.name} {
   ${this.toWhenMethod()}
 }
+
 `;
-    return code;
+    return code.trimLeft();
   }
 
   private toWhenMethod(): string {
-    var template = 'T when<T>({\n';
-    for (const value of this.values) {
-      template += `    required T Function() ${value},\n`;
+    const args = this.values
+      .map((e) => `required T Function() ${e},`)
+      .join('\n    ');
+    const cases = this.values
+      .map((e) => `case ${this.name}.${e}:\n        return ${e}();`)
+      .join('\n      ');
+
+    return `
+  T when<T>({
+    ${args}
+  }) {
+    switch (this) {
+      ${cases}
     }
-    template += '  }) {\n    switch (this) {\n';
-    for (const value of this.values) {
-      template += `      case ${this.name}.${value}:\n`;
-      template += `        return ${value}();\n`;
-    }
-    template += '    }\n  }\n';
-    return template;
+  }
+`.trim();
   }
 }
