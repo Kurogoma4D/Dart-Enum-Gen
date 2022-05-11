@@ -48,9 +48,8 @@ export default class DartEnum {
 extension ${this.name}PatternMatch on ${this.name} {
   ${this.toWhenMethod()}
 }
-
 `;
-    return code.trimLeft();
+    return code;
   }
 
   private toWhenMethod(): string {

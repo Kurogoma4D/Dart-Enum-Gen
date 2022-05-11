@@ -59,8 +59,11 @@ export class EnumPatternMatchGenerator implements vscode.CodeActionProvider {
       return null;
     }
 
-    fix.edit.insert(document.uri, dartEnum.range.end, dartEnum.toDartCode());
-    // fix.edit.insert(document.uri, new vscode.Position(行（enumの下）, 0), '');
+    fix.edit.insert(
+      document.uri,
+      new vscode.Position(line + 1, 0),
+      dartEnum.toDartCode()
+    );
 
     return fix;
   }
