@@ -2,6 +2,8 @@
   "name": "dart-enum-gen",
   "displayName": "Dart Enum Gen",
   "description": "Generator enum extension methods for Dart code.",
+  "repository": "https://github.com/Kurogoma4D/Dart-Enum-Gen",
+  "license": "MIT",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.56.0"
