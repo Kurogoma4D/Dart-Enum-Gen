@@ -3,6 +3,7 @@
   "displayName": "Dart Enum Gen",
   "description": "Generator enum extension methods for Dart code.",
   "repository": "https://github.com/Kurogoma4D/Dart-Enum-Gen",
+  "publisher": "Kurogoma4D",
   "license": "MIT",
   "version": "0.0.1",
   "engines": {
